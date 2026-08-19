@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  background: #0c0908;
+  --font-playfair: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-montserrat: Montserrat, Avenir, "Helvetica Neue", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(47, 111, 94, 0.08), transparent 26rem),
+    radial-gradient(circle at 90% 40%, rgba(37, 63, 143, 0.06), transparent 28rem),
+    #0c0908;
+  color: #fdfbf7;
+}
+
+::selection {
+  background: #d4af37;
+  color: #0c0908;
+}
+
+.film-grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.image-vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle, transparent 45%, rgba(12, 9, 8, 0.52) 100%);
+}
+
+.gold-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.55), transparent);
+}
+
+/* Brand mark: gold serif with a soft, layered glow so the name stands out
+   from the espresso backdrop while staying on-palette with the gold accents. */
+.brand-glow {
+  color: #d4af37;
+  text-shadow:
+    0 0 6px rgba(212, 175, 55, 0.45),
+    0 0 18px rgba(212, 175, 55, 0.28),
+    0 0 42px rgba(212, 175, 55, 0.18);
+}
+
+.btn-primary {
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.9rem 1.45rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background-color 220ms ease, color 220ms ease;
+}
+
+.btn-primary:hover {
+  background: #d4af37;
+  color: #0c0908;
+}
+
+.btn-ghost {
+  color: #fdfbf7;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  padding-bottom: 0.35rem;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.btn-ghost::after {
+  background: #d4af37;
+  bottom: 0;
+  content: "";
+  height: 1px;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+  transition: width 220ms ease;
+  width: 30%;
+}
+
+.btn-ghost:hover::after {
+  width: 100%;
+}
+
+.field {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.28);
+  border-radius: 0;
+  background: transparent;
+  color: #fdfbf7;
+  padding: 0.75rem 0;
+  outline: none;
+}
+
+.field:focus {
+  border-bottom-color: #d4af37;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}

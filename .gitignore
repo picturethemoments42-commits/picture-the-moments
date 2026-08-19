@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Env files — keep .env.example committed for documentation
+.env
+.env.*
+!.env.example
+
+# Sanity
+.sanity/
+
+# TypeScript / build artifacts
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Vercel / deployment
+.vercel
