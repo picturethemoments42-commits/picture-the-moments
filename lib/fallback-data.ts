@@ -11,7 +11,7 @@ export const projects: Project[] = [
     location: "Jaipur, Rajasthan",
     date: "2025-02-14",
     summary: "A palace wedding told through candlelight, marigold, and unhurried gestures.",
-    coverImage: image("https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1600&q=85", "Indian bride portrait in gold jewelry"),
+    coverImage: image("/IMG_7753.JPG", "Indian bride portrait in gold jewelry"),
     chapters: [
       {
         _type: "storyText",
@@ -21,13 +21,13 @@ export const projects: Project[] = [
       },
       {
         _type: "fullBleedImage",
-        image: image("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=85", "Wedding couple walking through a heritage venue"),
+        image: image("/IMG_7756.JPG", "Marigold and candlelight at the wedding ceremony"),
         caption: "The sangeet moved from ritual to revelry as the courtyard filled with gold."
       },
       {
         _type: "imagePair",
-        left: image("https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=85", "Wedding rings and details"),
-        right: image("https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=1200&q=85", "Wedding reception lights"),
+        left: image("/IMG_7754.JPG", "Wedding details and decor"),
+        right: image("/IMG_7755.JPG", "Wedding details and decor"),
         caption: "Small details, held close."
       }
     ]
@@ -40,7 +40,7 @@ export const projects: Project[] = [
     location: "Udaipur, Rajasthan",
     date: "2025-01-20",
     summary: "An editorial pre-wedding story in palace corridors and lakeside dusk.",
-    coverImage: image("https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1600&q=85", "Elegant wedding couple under warm lights"),
+    coverImage: image("/IMG_7757.JPG", "Elegant wedding couple under warm lights"),
     chapters: [
       {
         _type: "storyText",
@@ -49,7 +49,13 @@ export const projects: Project[] = [
       },
       {
         _type: "fullBleedImage",
-        image: image("https://images.unsplash.com/photo-1505932794465-147d1f1b2c97?auto=format&fit=crop&w=1800&q=85", "Couple portrait in cinematic warm light")
+        image: image("/IMG_7758.JPG", "Couple portrait in cinematic warm light")
+      },
+      {
+        _type: "imagePair",
+        left: image("/IMG_7759.JPG", "Palace corridors at dusk"),
+        right: image("/IMG_7760.JPG", "Palace corridors at dusk"),
+        caption: "Palace corridors, held in late light."
       }
     ]
   },
@@ -61,8 +67,14 @@ export const projects: Project[] = [
     location: "Mumbai, Maharashtra",
     date: "2024-12-02",
     summary: "A music-led celebration with editorial portraits and luminous after-dark frames.",
-    coverImage: image("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=85", "Wedding venue with warm string lights"),
-    chapters: []
+    coverImage: image("/IMG_7761.JPG", "Wedding venue with warm string lights"),
+    chapters: [
+      {
+        _type: "fullBleedImage",
+        image: image("/IMG_7767.JPG", "Dancers under warm after-dark lights"),
+        caption: "The evening built into a luminous, music-led finale."
+      }
+    ]
   },
   {
     _id: "makeup",
@@ -72,7 +84,14 @@ export const projects: Project[] = [
     location: "Delhi NCR",
     date: "2024-10-18",
     summary: "Beauty portraits focused on texture, jewelry, and sculpted directional light.",
-    coverImage: image("https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1600&q=85", "Bride getting ready")
+    coverImage: image("/IMG_7762.JPG", "Bride getting ready"),
+    chapters: [
+      {
+        _type: "fullBleedImage",
+        image: image("/IMG_7752.JPG", "Jewelry and makeup details in rich light"),
+        caption: "Every texture — silk, gold, skin — rendered as a still life."
+      }
+    ]
   },
   {
     _id: "birthday",
@@ -82,7 +101,14 @@ export const projects: Project[] = [
     location: "Goa",
     date: "2024-09-07",
     summary: "A private coastal celebration with cinematic stills and a relaxed editorial pace.",
-    coverImage: image("https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=1600&q=85", "Celebration table in warm light")
+    coverImage: image("/IMG_7764.JPG", "Celebration table in warm light"),
+    chapters: [
+      {
+        _type: "fullBleedImage",
+        image: image("/IMG_7770.JPG", "The celebration in a soft golden hour"),
+        caption: "Golden hour held the whole afternoon in a single frame."
+      }
+    ]
   },
   {
     _id: "commercial",
@@ -92,7 +118,15 @@ export const projects: Project[] = [
     location: "Ahmedabad, Gujarat",
     date: "2024-08-11",
     summary: "A jewelry campaign photographed with tactile shadows and heritage styling.",
-    coverImage: image("https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1600&q=85", "Gold jewelry editorial still life")
+    coverImage: image("/IMG_7766.JPG", "Gold jewelry editorial still life"),
+    chapters: [
+      {
+        _type: "imagePair",
+        left: image("/IMG_7768.JPG", "Tactile shadows and sculpted gold"),
+        right: image("/IMG_7769.PNG", "Tactile shadows and sculpted gold"),
+        caption: "Tactile shadows and sculpted gold."
+      }
+    ]
   }
 ];
 
@@ -123,7 +157,7 @@ export const homePage: HomePage = {
   hero: {
     media: {
       type: "image",
-      image: image("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2200&q=85", "Cinematic Indian wedding ceremony in warm light")
+      image: image("/IMG_4677.JPG", "Cinematic Indian wedding ceremony in warm light")
     },
     headline: "Stories Told in Gold",
     subheading: "Cinematic wedding photography rooted in Indian heritage",

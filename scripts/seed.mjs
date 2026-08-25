@@ -7,10 +7,21 @@
  *   2. Fill in NEXT_PUBLIC_SANITY_PROJECT_ID and SANITY_API_TOKEN
  *   3. npm run studio:seed
  *
- * The script is idempotent: existing documents are left untouched and
- * images are uploaded from the starter Unsplash URLs (skipped on failure).
+ * The script is idempotent: existing documents are left untouched unless you
+ * pass --replace (e.g. `npm run studio:seed -- --replace`), which deletes and
+ * recreates every seeded document so the local photos are used.
+ *
+ * Images are uploaded from the local source photos in the `public/`
+ * directory (skipped on failure).
  */
 import { createClient } from "@sanity/client";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+
+// When --replace is passed, existing seeded documents are deleted first so a
+// stale starter dataset (previously seeded from stock photos) is fully
+// replaced with the project's own imagery.
+const replace = process.argv.includes("--replace");
 
 try {
   process.loadEnvFile?.(".env.local");
@@ -36,15 +47,28 @@ const client = createClient({ projectId, dataset, apiVersion, useCdn: false, tok
 
 const log = (...args) => console.log("·", ...args);
 
-async function uploadImageFromUrl(url, name) {
+const CONTENT_TYPES = {
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".png": "image/png",
+  ".webp": "image/webp"
+};
+
+/**
+ * Uploads a local source photo (relative to the `public/` directory) to Sanity.
+ * @param {string} filePath File name relative to `public/`, e.g. "IMG_7753.JPG".
+ * @param {string} name Short identifier used as a fallback asset filename.
+ */
+async function uploadImageFromFile(filePath, name) {
   try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const contentType = res.headers.get("content-type") || "image/jpeg";
-    const buffer = Buffer.from(await res.arrayBuffer());
-    return await client.assets.upload("image", buffer, { contentType, filename: `${name}.jpg` });
+    const absolute = path.resolve(process.cwd(), "public", filePath);
+    const buffer = await readFile(absolute);
+    const ext = path.extname(filePath).toLowerCase();
+    const contentType = CONTENT_TYPES[ext] || "image/jpeg";
+    const filename = path.basename(filePath).replace(/[^\w.-]/g, "_") || `${name}.jpg`;
+    return await client.assets.upload("image", buffer, { contentType, filename });
   } catch (error) {
-    console.warn(`  ⚠ Could not upload "${url}" (${error.message}). Document created without this image.`);
+    console.warn(`  ⚠ Could not upload "${filePath}" (${error.message}). Image may be missing.`);
     return null;
   }
 }
@@ -55,8 +79,9 @@ function imageField(asset, alt) {
 
 const CATEGORIES = ["Wedding", "Pre-Wedding", "Portfolio", "Commercial", "Birthday", "Makeup Shoot", "Song Video"];
 
-// Starter projects. Image URLs match the app's fallback content so the
-// seeded dataset looks complete out of the box.
+// Starter projects. Each image is sourced from the local `public/` directory
+// (the real photos uploaded by the studio owner), so the seeded dataset uses
+// the project's own imagery instead of stock photos.
 const PROJECT_SEEDS = [
   {
     _id: "seed-aanya-rohan-jaipur",
@@ -66,7 +91,7 @@ const PROJECT_SEEDS = [
     location: "Jaipur, Rajasthan",
     date: "2025-02-14",
     summary: "A palace wedding told through candlelight, marigold, and unhurried gestures.",
-    cover: { url: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1600&q=85", alt: "Indian bride portrait in gold jewelry" },
+    cover: { file: "IMG_7753.JPG", alt: "Indian bride portrait in gold jewelry" },
     chapters: [
       {
         _type: "storyText",
@@ -76,14 +101,14 @@ const PROJECT_SEEDS = [
       },
       {
         _type: "fullBleedImage",
-        imageUrl: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=85",
-        alt: "Wedding couple walking through a heritage venue",
+        imageUrl: "IMG_7756.JPG",
+        alt: "Marigold and candlelight at the wedding ceremony",
         caption: "The sangeet moved from ritual to revelry as the courtyard filled with gold."
       },
       {
         _type: "imagePair",
-        leftUrl: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=85",
-        rightUrl: "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=1200&q=85",
+        leftUrl: "IMG_7754.JPG",
+        rightUrl: "IMG_7755.JPG",
         caption: "Small details, held close."
       }
     ]
@@ -96,7 +121,7 @@ const PROJECT_SEEDS = [
     location: "Udaipur, Rajasthan",
     date: "2025-01-20",
     summary: "An editorial pre-wedding story in palace corridors and lakeside dusk.",
-    cover: { url: "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1600&q=85", alt: "Elegant wedding couple under warm lights" },
+    cover: { file: "IMG_7757.JPG", alt: "Elegant wedding couple under warm lights" },
     chapters: [
       {
         _type: "storyText",
@@ -105,8 +130,14 @@ const PROJECT_SEEDS = [
       },
       {
         _type: "fullBleedImage",
-        imageUrl: "https://images.unsplash.com/photo-1505932794465-147d1f1b2c97?auto=format&fit=crop&w=1800&q=85",
+        imageUrl: "IMG_7758.JPG",
         alt: "Couple portrait in cinematic warm light"
+      },
+      {
+        _type: "imagePair",
+        leftUrl: "IMG_7759.JPG",
+        rightUrl: "IMG_7760.JPG",
+        caption: "Palace corridors, held in late light."
       }
     ]
   },
@@ -118,8 +149,15 @@ const PROJECT_SEEDS = [
     location: "Mumbai, Maharashtra",
     date: "2024-12-02",
     summary: "A music-led celebration with editorial portraits and luminous after-dark frames.",
-    cover: { url: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=85", alt: "Wedding venue with warm string lights" },
-    chapters: []
+    cover: { file: "IMG_7761.JPG", alt: "Wedding venue with warm string lights" },
+    chapters: [
+      {
+        _type: "fullBleedImage",
+        imageUrl: "IMG_7767.JPG",
+        alt: "Dancers under warm after-dark lights",
+        caption: "The evening built into a luminous, music-led finale."
+      }
+    ]
   },
   {
     _id: "seed-the-gold-room",
@@ -129,8 +167,15 @@ const PROJECT_SEEDS = [
     location: "Delhi NCR",
     date: "2024-10-18",
     summary: "Beauty portraits focused on texture, jewelry, and sculpted directional light.",
-    cover: { url: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1600&q=85", alt: "Bride getting ready" },
-    chapters: []
+    cover: { file: "IMG_7762.JPG", alt: "Bride getting ready" },
+    chapters: [
+      {
+        _type: "fullBleedImage",
+        imageUrl: "IMG_7752.JPG",
+        alt: "Jewelry and makeup details in rich light",
+        caption: "Every texture — silk, gold, skin — rendered as a still life."
+      }
+    ]
   },
   {
     _id: "seed-velvet-noon",
@@ -140,8 +185,15 @@ const PROJECT_SEEDS = [
     location: "Goa",
     date: "2024-09-07",
     summary: "A private coastal celebration with cinematic stills and a relaxed editorial pace.",
-    cover: { url: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=1600&q=85", alt: "Celebration table in warm light" },
-    chapters: []
+    cover: { file: "IMG_7764.JPG", alt: "Celebration table in warm light" },
+    chapters: [
+      {
+        _type: "fullBleedImage",
+        imageUrl: "IMG_7770.JPG",
+        alt: "The celebration in a soft golden hour",
+        caption: "Golden hour held the whole afternoon in a single frame."
+      }
+    ]
   },
   {
     _id: "seed-house-of-heirlooms",
@@ -151,8 +203,15 @@ const PROJECT_SEEDS = [
     location: "Ahmedabad, Gujarat",
     date: "2024-08-11",
     summary: "A jewelry campaign photographed with tactile shadows and heritage styling.",
-    cover: { url: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1600&q=85", alt: "Gold jewelry editorial still life" },
-    chapters: []
+    cover: { file: "IMG_7766.JPG", alt: "Gold jewelry editorial still life" },
+    chapters: [
+      {
+        _type: "imagePair",
+        leftUrl: "IMG_7768.JPG",
+        rightUrl: "IMG_7769.PNG",
+        caption: "Tactile shadows and sculpted gold."
+      }
+    ]
   }
 ];
 
@@ -161,10 +220,20 @@ async function documentExists(id) {
   return Boolean(found);
 }
 
+async function deleteIfExists(id) {
+  if (await documentExists(id)) {
+    log(`removing existing document "${id}" for replacement`);
+    await client.delete(id);
+  }
+}
+
 async function createIfMissing(id, body) {
   if (await documentExists(id)) {
-    log(`skipping existing document "${id}"`);
-    return false;
+    if (!replace) {
+      log(`skipping existing document "${id}"`);
+      return false;
+    }
+    await deleteIfExists(id);
   }
   await client.create({ _id: id, ...body });
   log(`created "${id}"`);
@@ -180,13 +249,13 @@ async function buildChapters(chapters, name) {
       continue;
     }
     if (chapter._type === "fullBleedImage") {
-      const asset = await uploadImageFromUrl(chapter.imageUrl, `${name}-chapter-${i}`);
+      const asset = await uploadImageFromFile(chapter.imageUrl, `${name}-chapter-${i}`);
       built.push({ _type: "fullBleedImage", image: imageField(asset, chapter.alt), caption: chapter.caption });
       continue;
     }
     if (chapter._type === "imagePair") {
-      const left = await uploadImageFromUrl(chapter.leftUrl, `${name}-chapter-${i}-left`);
-      const right = await uploadImageFromUrl(chapter.rightUrl, `${name}-chapter-${i}-right`);
+      const left = await uploadImageFromFile(chapter.leftUrl, `${name}-chapter-${i}-left`);
+      const right = await uploadImageFromFile(chapter.rightUrl, `${name}-chapter-${i}-right`);
       built.push({
         _type: "imagePair",
         left: imageField(left, `${chapter.caption || name} — left`),
@@ -203,11 +272,14 @@ async function seedProjects() {
   for (let i = 0; i < PROJECT_SEEDS.length; i += 1) {
     const seed = PROJECT_SEEDS[i];
     if (await documentExists(seed._id)) {
-      projectIds.push(seed._id);
-      log(`skipping existing project "${seed.slug}"`);
-      continue;
+      if (!replace) {
+        projectIds.push(seed._id);
+        log(`skipping existing project "${seed.slug}"`);
+        continue;
+      }
+      await deleteIfExists(seed._id);
     }
-    const coverAsset = await uploadImageFromUrl(seed.cover.url, `${seed.slug}-cover`);
+    const coverAsset = await uploadImageFromFile(seed.cover.file, `${seed.slug}-cover`);
     const chapters = await buildChapters(seed.chapters, seed.slug);
     await client.create({
       _id: seed._id,
@@ -227,8 +299,8 @@ async function seedProjects() {
   return projectIds;
 }
 async function seedSingletons(projectIds) {
-  const heroImage = "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2200&q=85";
-  const heroAsset = await uploadImageFromUrl(heroImage, "home-hero");
+  const heroImage = "IMG_4677.JPG";
+  const heroAsset = await uploadImageFromFile(heroImage, "home-hero");
 
   await createIfMissing("siteSettings", {
     _type: "siteSettings",

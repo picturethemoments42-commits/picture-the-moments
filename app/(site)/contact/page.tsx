@@ -1,5 +1,5 @@
-import { Send } from "lucide-react";
 import { getContactPage } from "@/lib/queries";
+import ContactForm from "@/components/ContactForm";
 
 export const metadata = {
   title: "Contact | Picture the Moment"
@@ -22,36 +22,7 @@ export default async function ContactPage() {
             <p>{page.address}</p>
           </div>
         </div>
-        <form className="space-y-8 md:col-span-6 md:col-start-7">
-          <label className="block text-xs font-semibold uppercase tracking-[0.14em] text-gold">
-            Your Name
-            <input className="field mt-2" name="name" autoComplete="name" />
-          </label>
-          <label className="block text-xs font-semibold uppercase tracking-[0.14em] text-gold">
-            Email
-            <input className="field mt-2" name="email" type="email" autoComplete="email" />
-          </label>
-          <label className="block text-xs font-semibold uppercase tracking-[0.14em] text-gold">
-            Event Type
-            <select className="field mt-2" name="eventType" defaultValue="">
-              <option value="" disabled>Select a story type</option>
-              {page.eventTypes.map((eventType) => (
-                <option key={eventType} value={eventType}>{eventType}</option>
-              ))}
-            </select>
-          </label>
-          <label className="block text-xs font-semibold uppercase tracking-[0.14em] text-gold">
-            Date and Location
-            <input className="field mt-2" name="dateLocation" />
-          </label>
-          <label className="block text-xs font-semibold uppercase tracking-[0.14em] text-gold">
-            Tell Us More
-            <textarea className="field mt-2 min-h-36 resize-y" name="message" />
-          </label>
-          <button className="btn-primary" type="submit">
-            Send Enquiry <Send size={15} />
-          </button>
-        </form>
+        <ContactForm eventTypes={page.eventTypes} />
       </section>
     </main>
   );
