@@ -3,8 +3,8 @@ import { ArrowRight } from "lucide-react";
 
 export function CtaSection() {
   return (
-    <section className="relative overflow-hidden bg-surface px-6 py-24 md:px-8 md:py-32">
-      <div className="mx-auto max-w-3xl text-center">
+    <section className="relative overflow-hidden bg-surface">
+      <div className="mx-auto my-8 max-w-3xl text-center">
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-gold">Begin Your Story</p>
         <h2 className="font-serif text-4xl leading-tight text-ivory md:text-6xl">
           Your celebration deserves to be remembered.
