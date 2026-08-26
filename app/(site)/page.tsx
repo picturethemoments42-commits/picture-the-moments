@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, Pause, Play } from "lucide-react";
+import { CtaSection } from "@/components/CtaSection";
 import { ProjectTile } from "@/components/ProjectTile";
 import { Reveal } from "@/components/Motion";
 import { SanityImage } from "@/components/SanityImage";
@@ -8,7 +9,7 @@ import { getHomePage } from "@/lib/queries";
 export async function generateMetadata() {
   const page = await getHomePage();
   return {
-    title: page.seo?.metadataTitle || "Picture the Moment",
+    title: page.seo?.metadataTitle || "Picture the moments",
     description: page.seo?.metadataDescription || "Cinematic Indian wedding photography rooted in heritage."
   };
 }
@@ -51,7 +52,7 @@ export default async function HomePage() {
           {page.hero.subheading ? (
             <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-muted">{page.hero.subheading}</p>
           ) : null}
-          <h1 className="font-serif text-5xl leading-tight text-gold md:text-7xl">{page.hero.headline}</h1>
+          <h1 className="font-serif text-4xl leading-tight text-gold md:text-6xl">{page.hero.headline}</h1>
           <Link href={page.hero.ctaLink} className="btn-ghost mt-9">
             {page.hero.ctaText} <ArrowRight size={15} />
           </Link>
@@ -76,7 +77,7 @@ export default async function HomePage() {
         <div className="mx-auto mb-12 flex max-w-container items-end justify-between gap-6">
           <div>
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-gold">{works.eyebrow}</p>
-            <h2 className="font-serif text-4xl text-ivory md:text-5xl">{works.title}</h2>
+            <h2 className="font-serif text-3xl text-ivory md:text-5xl">{works.title}</h2>
             {works.description ? <p className="mt-4 max-w-2xl text-sm font-light leading-6 text-muted">{works.description}</p> : null}
           </div>
           <Link href={works.ctaLink} className="btn-ghost hidden md:inline-flex">{works.ctaText}</Link>
@@ -94,7 +95,7 @@ export default async function HomePage() {
         <div className="mx-auto grid max-w-container gap-10 md:grid-cols-12 md:items-center">
           <Reveal className="md:col-span-5">
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-gold">{experience.eyebrow}</p>
-            <h2 className="font-serif text-4xl leading-tight text-ivory md:text-5xl">{experience.title}</h2>
+            <h2 className="font-serif text-3xl leading-tight text-ivory md:text-5xl">{experience.title}</h2>
           </Reveal>
           <Reveal className="md:col-span-5 md:col-start-8">
             <p className="text-base font-light leading-8 text-muted">{experience.body}</p>
@@ -104,6 +105,8 @@ export default async function HomePage() {
           </Reveal>
         </div>
       </section>
+
+      <CtaSection />
     </main>
   );
 }

@@ -10,7 +10,7 @@ export const projectDetailPage = defineType({
     defineField({ name: "backLink", title: "Back Link URL", type: "string", initialValue: "/projects" }),
     defineField({ name: "nextEyebrow", title: "Next Story Eyebrow", type: "string", initialValue: "Next" }),
     defineField({ name: "nextCtaText", title: "Next Story CTA Text", type: "string", initialValue: "Continue Exploring" }),
-    defineField({ name: "metadataTitle", title: "Browser / SEO Title", type: "string", initialValue: "Picture the Moment" }),
+    defineField({ name: "metadataTitle", title: "Browser / SEO Title", type: "string", initialValue: "Picture the moments" }),
     defineField({ name: "metadataDescription", title: "SEO Description", type: "text", rows: 3 })
   ]
 });

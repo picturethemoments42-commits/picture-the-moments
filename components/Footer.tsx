@@ -7,7 +7,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
     <footer className="border-t border-gold/15 bg-surface px-6 py-12 md:px-8">
       <div className="mx-auto grid max-w-container gap-10 md:grid-cols-12">
         <div className="md:col-span-5">
-          <p className="brand-glow font-serif text-3xl md:text-4xl">{settings.studioName}</p>
+          <p className="brand-glow font-serif text-3xl capitalize md:text-4xl">{settings.studioName}</p>
           <p className="mt-4 max-w-sm text-sm leading-7 text-muted">{settings.footerText}</p>
         </div>
         <div className="flex flex-wrap gap-5 text-sm text-muted md:col-span-5 md:justify-end">

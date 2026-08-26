@@ -131,9 +131,9 @@ export const projects: Project[] = [
 ];
 
 export const siteSettings: SiteSettings = {
-  studioName: "Picture the Moment",
-  instagramUrl: "https://instagram.com/",
-  whatsappUrl: "https://wa.me/910000000000?text=Hello%2C%20I%27d%20love%20to%20enquire%20about%20a%20wedding%20story.",
+  studioName: "Picture The Moments",
+  instagramUrl: "https://www.instagram.com/picture.the_moments",
+  whatsappUrl: "https://wa.me/918437807609?text=Hello%2C%20I%27d%20love%20to%20enquire%20about%20a%20wedding%20story.",
   footerText: "Capturing the soul of Indian heritage.",
   navLinks: [
     { label: "Portfolio", href: "/projects" },
@@ -149,8 +149,8 @@ export const siteSettings: SiteSettings = {
   ],
   navCtaLabel: "Book a Consultation",
   navCtaLink: "/contact",
-  metadataTitle: "Picture the Moment | Cinematic Wedding Photography",
-  metadataDescription: "Picture the Moment — cinematic Indian wedding photography, powered by Next.js and Sanity."
+  metadataTitle: "Picture the moments | Cinematic Wedding Photography",
+  metadataDescription: "Picture the moments — cinematic Indian wedding photography, powered by Next.js and Sanity."
 };
 
 export const homePage: HomePage = {
@@ -183,7 +183,7 @@ export const homePage: HomePage = {
     ctaLink: "/about"
   },
   seo: {
-    metadataTitle: "Home | Picture the Moment",
+    metadataTitle: "Home | Picture the moments",
     metadataDescription: "Cinematic Indian wedding photography rooted in heritage, texture, and unhurried storytelling."
   }
 };
@@ -193,7 +193,7 @@ export const projectsPage: ProjectsPage = {
   title: "Stories across rituals, cities, and light.",
   intro: "Browse the complete archive. Filters are generated from project categories in Sanity, so new service types can be added without changing the UI.",
   filterAllLabel: "All",
-  metadataTitle: "Archive | Picture the Moment",
+  metadataTitle: "Archive | Picture the moments",
   metadataDescription: "Explore the complete wedding photography archive — every story, city, and light."
 };
 
@@ -203,7 +203,7 @@ export const projectDetailPage: ProjectDetailPage = {
   backLink: "/projects",
   nextEyebrow: "Next",
   nextCtaText: "Continue Exploring",
-  metadataTitle: "Picture the Moment",
+  metadataTitle: "Picture the moments",
   metadataDescription: "A project story told through cinematic wedding photography."
 };
 
@@ -211,7 +211,7 @@ export const contactPage: ContactPage = {
   heading: "Begin Your Story",
   intro: "Tell us where the celebration begins. We accept a limited number of commissions so every story has the time and attention it deserves.",
   email: "hello@picturethemoment.in",
-  phone: "+91 00000 00000",
+  phone: "+91 84378 07609",
   address: "New Delhi, India. Available for celebrations worldwide.",
   eventTypes: ["Wedding", "Pre-Wedding", "Portfolio", "Commercial", "Birthday", "Makeup Shoot", "Song Video"]
 };

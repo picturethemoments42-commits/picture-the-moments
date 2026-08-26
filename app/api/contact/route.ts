@@ -64,12 +64,12 @@ export async function POST(request: NextRequest) {
     });
 
     await transporter.sendMail({
-      from: `"Picture the Moment Website" <${SMTP_USER}>`,
+      from: `"Picture the moments Website" <${SMTP_USER}>`,
       to: RECIPIENT_EMAIL,
       replyTo: email,
       subject: `New enquiry from ${name}`,
       text: [
-        "A website enquiry has been submitted from the Picture the Moment contact page.",
+        "A website enquiry has been submitted from the Picture the moments contact page.",
         "",
         `Name: ${name}`,
         `Email: ${email}`,

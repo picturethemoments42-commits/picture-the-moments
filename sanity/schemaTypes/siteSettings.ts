@@ -5,7 +5,7 @@ export const siteSettings = defineType({
   title: "Site Settings",
   type: "document",
   fields: [
-    defineField({ name: "studioName", title: "Studio Name", type: "string", initialValue: "Picture the Moment", validation: (Rule) => Rule.required() }),
+    defineField({ name: "studioName", title: "Studio Name", type: "string", initialValue: "Picture The Moments", validation: (Rule) => Rule.required() }),
     defineField({
       name: "logo",
       title: "Logo",

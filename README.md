@@ -1,4 +1,4 @@
-# Picture the Moment
+# Picture the moments
 
 A cinematic Indian wedding photography portfolio built with Next.js App Router, Sanity Studio, GSAP ScrollTrigger, Lenis smooth scrolling, and image-first editorial layouts.
 

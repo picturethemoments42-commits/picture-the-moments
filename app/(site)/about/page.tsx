@@ -1,7 +1,8 @@
 import Link from "next/link";
+import { CtaSection } from "@/components/CtaSection";
 
 export const metadata = {
-  title: "Experience | Picture the Moment"
+  title: "Experience | Picture the moments"
 };
 
 export default function AboutPage() {
@@ -10,7 +11,7 @@ export default function AboutPage() {
       <section className="mx-auto max-w-container">
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-gold">The Experience</p>
         <div className="grid gap-10 md:grid-cols-12">
-          <h1 className="font-serif text-5xl leading-tight text-ivory md:col-span-7 md:text-7xl">
+          <h1 className="font-serif text-4xl leading-tight text-ivory md:col-span-7 md:text-6xl">
             A wedding story should feel as considered as the celebration itself.
           </h1>
           <div className="space-y-8 text-base font-light leading-8 text-muted md:col-span-4 md:col-start-9">
@@ -24,6 +25,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <CtaSection />
     </main>
   );
 }

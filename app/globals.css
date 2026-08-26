@@ -64,6 +64,23 @@ body {
     0 0 42px rgba(212, 175, 55, 0.18);
 }
 
+/* Mobile hamburger menu — fade in as it opens. */
+.menu-overlay {
+  opacity: 0;
+  animation: menu-fade-in 0.28s ease forwards;
+}
+
+@keyframes menu-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .btn-primary {
   border: 1px solid #d4af37;
   color: #d4af37;
@@ -81,6 +98,20 @@ body {
 .btn-primary:hover {
   background: #d4af37;
   color: #0c0908;
+}
+
+/* Desktop-only nav CTA. Hidden on phones (and other <md screens) — the
+   "Book a Consultation" action lives only inside the mobile hamburger menu.
+   Defined here (outside Tailwind's layers) so it beats .btn-primary's
+   `display: inline-flex` on small screens. */
+.nav-cta-desktop {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .nav-cta-desktop {
+    display: inline-flex;
+  }
 }
 
 .btn-ghost {

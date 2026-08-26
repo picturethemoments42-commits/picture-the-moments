@@ -5,8 +5,8 @@ import { getSiteSettings } from "@/lib/queries";
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
   return {
-    title: settings.metadataTitle || "Picture the Moment | Cinematic Wedding Photography",
-    description: settings.metadataDescription || "Picture the Moment — cinematic Indian wedding photography."
+    title: settings.metadataTitle || "Picture the moments | Cinematic Wedding Photography",
+    description: settings.metadataDescription || "Picture the moments — cinematic Indian wedding photography."
   };
 }
 

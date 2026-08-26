@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import { ArrowLeft } from "lucide-react";
+import { CtaSection } from "@/components/CtaSection";
 import { SanityImage } from "@/components/SanityImage";
 import { Reveal } from "@/components/Motion";
 import { getProject, getProjectDetailPage, getProjects } from "@/lib/queries";
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const [project, detailPage] = await Promise.all([getProject(slug), getProjectDetailPage()]);
   return {
-    title: project ? `${project.title} | ${detailPage.metadataTitle || "Picture the Moment"}` : detailPage.metadataTitle || "Project",
+    title: project ? `${project.title} | ${detailPage.metadataTitle || "Picture the moments"}` : detailPage.metadataTitle || "Project",
     description: project?.summary || detailPage.metadataDescription || undefined
   };
 }
@@ -49,7 +50,7 @@ export default async function ProjectDetailPage({ params }: Props) {
         <div className="relative z-10 mx-auto grid w-full max-w-container gap-8 px-6 pb-24 md:grid-cols-12 md:px-8">
           <div className="md:col-span-8">
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-gold">{project.location}</p>
-            <h1 className="font-serif text-5xl leading-tight text-ivory md:text-7xl">{project.title}</h1>
+            <h1 className="font-serif text-4xl leading-tight text-ivory md:text-6xl">{project.title}</h1>
             {project.summary ? <p className="mt-5 max-w-2xl text-lg font-light leading-8 text-muted">{project.summary}</p> : null}
           </div>
           <div className="flex items-end gap-3 md:col-span-4 md:justify-end">
@@ -139,6 +140,8 @@ export default async function ProjectDetailPage({ params }: Props) {
           </div>
         </section>
       ) : null}
+
+      <CtaSection />
     </main>
   );
 }

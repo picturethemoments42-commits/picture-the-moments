@@ -8,7 +8,7 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 
 export default defineConfig({
   name: "cinematic_wedding_portfolio",
-  title: "Picture the Moment",
+  title: "Picture the moments",
   projectId,
   dataset,
   basePath: "/studio",
