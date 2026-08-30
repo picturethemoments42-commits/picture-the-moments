@@ -8,7 +8,7 @@ import type { SiteSettings } from "@/lib/types";
 export function Nav({ settings }: { settings: SiteSettings }) {
   const links = settings.navLinks ?? [];
   const ctaLabel = settings.navCtaLabel || "Book a Consultation";
-  const ctaLink = settings.navCtaLink || "/contact";
+  const whatsappUrl = settings.whatsappUrl || "https://wa.me/918437807609";
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -46,9 +46,9 @@ export function Nav({ settings }: { settings: SiteSettings }) {
             ))}
           </div>
           <div className="flex items-center gap-3">
-            <Link href={ctaLink} className="btn-primary nav-cta-desktop">
+            <a href={whatsappUrl} target="_blank" rel="noreferrer" className="btn-primary nav-cta-desktop">
               {ctaLabel}
-            </Link>
+            </a>
             <button type="button" onClick={() => setOpen(true)} className="z-[95] text-gold md:hidden" aria-label="Open menu">
               <Menu size={26} strokeWidth={1.4} />
             </button>
@@ -80,9 +80,9 @@ export function Nav({ settings }: { settings: SiteSettings }) {
                 <ArrowRight size={18} className="text-gold transition group-hover:translate-x-1" />
               </Link>
             ))}
-            <Link href={ctaLink} onClick={() => setOpen(false)} className="btn-primary mt-8 inline-flex w-full justify-center">
+            <a href={whatsappUrl} target="_blank" rel="noreferrer" onClick={() => setOpen(false)} className="btn-primary mt-8 inline-flex w-full justify-center">
               {ctaLabel}
-            </Link>
+            </a>
             <div className="mt-10 flex items-center justify-center gap-7">
               <a href={settings.instagramUrl} target="_blank" rel="noreferrer" aria-label="Instagram" className="text-gold transition hover:text-ivory">
                 <Instagram size={24} />

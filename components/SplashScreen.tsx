@@ -27,7 +27,9 @@ export function SplashScreen({ studioName }: { studioName: string }) {
     const brand = brandRef.current;
     if (!root || !top || !bottom || !brand) return;
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
     // Start with panels fully off-screen (top above viewport, bottom below)
     // and the logo invisible. The opaque root covers the page the whole time.
@@ -43,14 +45,19 @@ export function SplashScreen({ studioName }: { studioName: string }) {
 
     const tl = gsap.timeline({
       defaults: { ease: "power3.inOut" },
-      onComplete: () => gsap.set(root, { display: "none" })
+      onComplete: () => gsap.set(root, { display: "none" }),
     });
 
     // 1. Panels slide in from top & bottom and meet in the middle (cover page).
     tl.to(top, { duration: 1, yPercent: 0 })
       .to(bottom, { duration: 1, yPercent: 0 }, "<")
       // 2. Logo fades in at the centre (slightly overlapping the panels closing).
-      .fromTo(brand, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, "-=0.5")
+      .fromTo(
+        brand,
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+        "-=0.5",
+      )
       // 3. Hold for 1s, then the whole overlay fades out together.
       .to(root, { autoAlpha: 0, duration: 0.8, ease: "power2.inOut" }, "+=1");
   }, [studioName]);
@@ -58,13 +65,19 @@ export function SplashScreen({ studioName }: { studioName: string }) {
   return (
     <div
       ref={rootRef}
-      className="fixed inset-0 z-[120] bg-espresso"
+      className="fixed inset-0 z-[120] bg-espresso p-4"
       aria-hidden="true"
     >
       {/* Top panel */}
-      <div ref={topRef} className="absolute inset-x-0 top-0 h-1/2 bg-surface" />
+      <div
+        ref={topRef}
+        className="absolute inset-x-0 top-0 h-1/2 bg-surface border-2 border-b-0 border-gold"
+      />
       {/* Bottom panel */}
-      <div ref={bottomRef} className="absolute inset-x-0 bottom-0 h-1/2 bg-surface" />
+      <div
+        ref={bottomRef}
+        className="absolute inset-x-0 bottom-0 h-1/2 bg-surface border-2 border-t-0 border-gold"
+      />
       {/* Logo, centred on the overlay */}
       <p
         ref={brandRef}

@@ -1,4 +1,5 @@
 import { getContactPage } from "@/lib/queries";
+import { ContactBento } from "@/components/ContactBento";
 import { CtaSection } from "@/components/CtaSection";
 import ContactForm from "@/components/ContactForm";
 
@@ -26,7 +27,9 @@ export default async function ContactPage() {
         <ContactForm eventTypes={page.eventTypes} />
       </section>
 
-      <CtaSection />
+      <ContactBento />
+
+      <CtaSection showConsultCta={false} />
     </main>
   );
 }

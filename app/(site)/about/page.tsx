@@ -1,11 +1,16 @@
 import Link from "next/link";
 import { CtaSection } from "@/components/CtaSection";
+import { ExperienceCarousel } from "@/components/ExperienceCarousel";
+import { getSiteSettings } from "@/lib/queries";
 
 export const metadata = {
   title: "Experience | Picture the moments"
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const settings = await getSiteSettings();
+  const whatsappUrl = settings.whatsappUrl || "https://wa.me/918437807609";
+
   return (
     <main className="px-6 pb-28 pt-40 md:px-8">
       <section className="mx-auto max-w-container">
@@ -21,10 +26,14 @@ export default function AboutPage() {
             <p>
               The result is not a gallery of isolated moments. It is a living archive: tactile, emotional, and designed to be revisited for decades.
             </p>
-            <Link href="/contact" className="btn-primary">Book a Consultation</Link>
+            <a href={whatsappUrl} target="_blank" rel="noreferrer" className="btn-primary">
+              Book a Consultation
+            </a>
           </div>
         </div>
       </section>
+
+      <ExperienceCarousel />
 
       <CtaSection />
     </main>
