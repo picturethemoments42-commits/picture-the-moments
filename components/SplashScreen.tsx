@@ -17,6 +17,7 @@ export function SplashScreen({ studioName }: { studioName: string }) {
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const brandRef = useRef<HTMLParagraphElement>(null);
+  const hudRef = useRef<HTMLDivElement>(null);
 
   // useLayoutEffect runs synchronously before the browser paints, so the
   // splash is set up (and covers the page) before the landing page can flash.
@@ -25,7 +26,8 @@ export function SplashScreen({ studioName }: { studioName: string }) {
     const top = topRef.current;
     const bottom = bottomRef.current;
     const brand = brandRef.current;
-    if (!root || !top || !bottom || !brand) return;
+    const hud = hudRef.current;
+    if (!root || !top || !bottom || !brand || !hud) return;
 
     const reduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
@@ -37,6 +39,7 @@ export function SplashScreen({ studioName }: { studioName: string }) {
     gsap.set(top, { yPercent: -100 });
     gsap.set(bottom, { yPercent: 100 });
     gsap.set(brand, { opacity: 0, y: 14 });
+    gsap.set(hud, { autoAlpha: 0, y: 8 });
 
     if (reduced) {
       gsap.set(root, { display: "none" });
@@ -58,7 +61,14 @@ export function SplashScreen({ studioName }: { studioName: string }) {
         { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
         "-=0.5",
       )
-      // 3. Hold for 1s, then the whole overlay fades out together.
+      // 3. Camera HUD fades in as the panels meet, like a viewfinder powering up.
+      .fromTo(
+        hud,
+        { autoAlpha: 0, y: 8 },
+        { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" },
+        "-=0.6",
+      )
+      // 4. Hold for 1s, then the whole overlay fades out together.
       .to(root, { autoAlpha: 0, duration: 0.8, ease: "power2.inOut" }, "+=1");
   }, [studioName]);
 
@@ -85,6 +95,39 @@ export function SplashScreen({ studioName }: { studioName: string }) {
       >
         {studioName}
       </p>
+
+      {/* Camera viewfinder HUD — corner marks and readouts in the border gold */}
+      <div ref={hudRef} className="pointer-events-none absolute inset-0">
+        {/* Corner viewfinder marks */}
+        <span className="absolute left-5 top-5 h-4 w-4 border-l-2 border-t-2 border-gold" aria-hidden="true" />
+        <span className="absolute right-5 top-5 h-4 w-4 border-r-2 border-t-2 border-gold" aria-hidden="true" />
+        <span className="absolute bottom-5 left-5 h-4 w-4 border-b-2 border-l-2 border-gold" aria-hidden="true" />
+        <span className="absolute bottom-5 right-5 h-4 w-4 border-b-2 border-r-2 border-gold" aria-hidden="true" />
+
+        {/* Top-left: exposure readout */}
+        <p className="absolute left-11 top-11 text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-gold">
+          ISO 800 · 35mm · f/1.8
+        </p>
+
+        {/* Top-right: remaining battery */}
+        <p className="absolute right-11 top-11 flex items-center gap-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-gold">
+          <span className="block h-2.5 w-5 border border-gold p-px" aria-hidden="true">
+            <span className="block h-full w-[85%] bg-gold" />
+          </span>
+          98%
+        </p>
+
+        {/* Bottom-left: frame counter */}
+        <p className="absolute bottom-11 left-11 font-mono text-[0.6rem] font-semibold tracking-[0.2em] text-gold">
+          024 / 240
+        </p>
+
+        {/* Bottom-right: REC indicator + timecode */}
+        <p className="absolute bottom-11 right-11 flex items-center gap-1.5 font-mono text-[0.6rem] font-semibold tracking-[0.18em] text-gold">
+          <span className="rec-blink h-1.5 w-1.5 rounded-full bg-gold" aria-hidden="true" />
+          REC 00:04:27
+        </p>
+      </div>
     </div>
   );
 }

@@ -79,15 +79,24 @@ export default async function HomePage() {
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-gold">{works.eyebrow}</p>
             <h2 className="font-serif text-3xl text-ivory md:text-5xl">{works.title}</h2>
             {works.description ? <p className="mt-4 max-w-2xl text-sm font-light leading-6 text-muted">{works.description}</p> : null}
+            {/* Mobile-only cue that the carousel scrolls sideways */}
+            <p className="mt-6 flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-gold md:hidden">
+              Swipe to explore
+              <ArrowRight size={13} strokeWidth={1.8} className="swipe-nudge" aria-hidden="true" />
+            </p>
           </div>
           <Link href={works.ctaLink} className="btn-ghost hidden md:inline-flex">{works.ctaText}</Link>
         </div>
-        <div className="flex snap-x gap-8 overflow-x-auto pb-6">
-          {page.highlights.map((project, index) => (
-            <div key={project._id} className="w-[86vw] shrink-0 snap-center md:w-[58vw]">
-              <ProjectTile project={project} priority={index === 0} tall />
-            </div>
-          ))}
+        <div className="relative">
+          <div className="flex snap-x gap-8 overflow-x-auto pb-6">
+            {page.highlights.map((project, index) => (
+              <div key={project._id} className="w-[86vw] shrink-0 snap-center md:w-[58vw]">
+                <ProjectTile project={project} priority={index === 0} tall />
+              </div>
+            ))}
+          </div>
+          {/* Soft right-edge fade suggesting there is more to scroll into */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface via-surface/60 to-transparent md:w-16" />
         </div>
       </section>
 
